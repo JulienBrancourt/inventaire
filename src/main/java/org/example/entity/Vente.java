@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import org.example.util.Etat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Vente {
@@ -21,7 +21,7 @@ public class Vente {
     private int id;
 
     @Column(name="date_vente")
-    private LocalDate dateVente;
+    private Date dateVente;
 
     @Enumerated
     private Etat etat;
@@ -37,4 +37,8 @@ public class Vente {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
+
+    public Vente() {
+        articles = new ArrayList<>();
+    }
 }
