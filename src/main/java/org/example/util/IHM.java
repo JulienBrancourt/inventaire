@@ -46,9 +46,9 @@ public class IHM {
 
         while (true) {
             System.out.println("=== Gestion de l'inventaire ===");
-            System.out.println("1. Article Electronique");
+            System.out.println("1. Articles Electroniques");
             System.out.println("2. Nourriture");
-            System.out.println("3. Article de mode");
+            System.out.println("3. Articles de mode");
             System.out.print("Sélectionnez une option : ");
             choixTypeArticle = sc.nextLine();
 
