@@ -27,4 +27,15 @@ public abstract class Article {
     @ManyToMany(mappedBy = "articles")
     private List<Vente> ventes;
 
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", prix=" + prix +
+                ", quantite=" + quantite +
+                ", dateRestock=" + dateRestock +
+                '}';
+    }
+
 }

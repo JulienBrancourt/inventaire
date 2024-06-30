@@ -5,6 +5,9 @@ import org.example.util.SessionfactorySingleton;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.Query;
+import java.util.List;
+
 public class VenteRepository {
     private SessionFactory sessionFactory;
     private Session session;
@@ -14,39 +17,63 @@ public class VenteRepository {
     }
 
     public Vente createVente(Vente vente) {
-        try{
+        try {
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(vente);
             session.getTransaction().commit();
             return vente;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             session.getTransaction().rollback();
             return null;
-        }finally {
+        } finally {
             session.close();
         }
     }
 
-    public boolean delete(Vente vente){
-        try{
+    public boolean delete(Vente vente) {
+        try {
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.delete(vente);
             session.getTransaction().commit();
             return true;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             session.getTransaction().rollback();
             return false;
-        }finally {
+        } finally {
             session.close();
         }
     }
 
-    public Vente findById (int id ){
+    public Vente findById(int id) {
         session = sessionFactory.openSession();
-        Vente vente = session.get(Vente.class,id);
+        Vente vente = session.get(Vente.class, id);
         session.close();
         return vente;
+    }
+
+    public List<Vente> findAll() {
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+            String sql = "SELECT v.* FROM vente v " +
+                    "INNER JOIN vente_article va ON v.id = va.vente_id " +
+                    "INNER JOIN article a ON va.article_id = a.id " +
+                    "INNER JOIN client c ON v.client_id = c.id";
+            Query query = session.createNativeQuery(sql, Vente.class);
+            List<Vente> ventes = query.getResultList();
+
+            // Affichage des résultats
+            for (Vente vente : ventes) {
+                System.out.println(vente);
+            }
+
+            return ventes;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

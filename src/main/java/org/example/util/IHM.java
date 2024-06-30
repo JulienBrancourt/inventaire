@@ -33,6 +33,7 @@ public class IHM {
                 case "1" -> choixArticle();
                 case "2" -> IHMVente();
                 case "3" -> IhmClient();
+                case "4" -> IHMRapports();
                 default -> {
                     return;
                 }
@@ -75,6 +76,11 @@ public class IHM {
     private void IHMVente () {
         IHMVente ihmVente = new IHMVente();
         ihmVente.start();
+    }
+
+    private void IHMRapports () {
+        IHMRapports ihmRapports = new IHMRapports();
+        ihmRapports.start();
     }
 
 

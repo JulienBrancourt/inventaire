@@ -33,4 +33,13 @@ public class Client {
     public void addVente (Vente vente) {
         ventes.add(vente);
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

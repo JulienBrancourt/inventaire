@@ -41,4 +41,15 @@ public class Vente {
     public Vente() {
         articles = new ArrayList<>();
     }
+
+    @Override
+    public String toString() {
+        return "Vente{" +
+                "id=" + id +
+                ", dateVente=" + dateVente +
+                ", etat=" + etat +
+                ", client=" + (client != null ? client.getId() : null) +
+                ", articlesCount=" + (articles != null ? articles.size() : 0) +
+                '}';
+    }
 }

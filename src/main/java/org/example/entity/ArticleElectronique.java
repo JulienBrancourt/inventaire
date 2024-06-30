@@ -14,4 +14,11 @@ import javax.persistence.Entity;
 public class ArticleElectronique extends Article {
     @Column(name="duree_batterie")
     private int dureeBatterie;
+
+    @Override
+    public String toString() {
+        return super.toString() + " ArticleElectronique{" +
+                "dureeBatterie=" + dureeBatterie +
+                '}';
+    }
 }
