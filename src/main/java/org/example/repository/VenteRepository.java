@@ -57,11 +57,20 @@ public class VenteRepository {
         Session session = null;
         try {
             session = sessionFactory.openSession();
-            String sql = "SELECT v.* FROM vente v " +
-                    "INNER JOIN vente_article va ON v.id = va.vente_id " +
-                    "INNER JOIN article a ON va.article_id = a.id " +
-                    "INNER JOIN client c ON v.client_id = c.id";
-            Query query = session.createNativeQuery(sql, Vente.class);
+
+            //version sql
+//            String sql = "SELECT v.* FROM vente v " +
+//                    "INNER JOIN vente_article va ON v.id = va.vente_id " +
+//                    "INNER JOIN article a ON va.article_id = a.id " +
+//                    "INNER JOIN client c ON v.client_id = c.id";
+//            Query query = session.createNativeQuery(sql, Vente.class);
+//            List<Vente> ventes = query.getResultList();
+
+            //version hql
+            String hql = "SELECT v FROM Vente v " +
+                    "JOIN FETCH v.articles a " +
+                    "JOIN FETCH v.client c";
+            Query query = session.createQuery(hql, Vente.class);
             List<Vente> ventes = query.getResultList();
 
             // Affichage des résultats

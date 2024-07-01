@@ -55,6 +55,7 @@ public class IHM {
 
             switch (choixTypeArticle) {
                 case "1" -> IHMElectronique();
+                case "3" -> IHMMode();
                 default -> {
                     return;
                 }
@@ -63,9 +64,13 @@ public class IHM {
     }
 
     private void IHMElectronique() {
-
     IHMElectronique iHMElectronique = new IHMElectronique();
     iHMElectronique.start();
+    }
+
+    private void IHMMode() {
+        IHMMode ihmMode = new IHMMode();
+        ihmMode.start();
     }
 
     private void IhmClient () {

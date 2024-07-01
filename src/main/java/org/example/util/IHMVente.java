@@ -4,6 +4,7 @@ import org.example.entity.Article;
 import org.example.entity.ArticleElectronique;
 import org.example.entity.Client;
 import org.example.entity.Vente;
+import org.example.repository.ArticleRepository;
 import org.example.repository.ClientRepository;
 import org.example.repository.ElectroniqueRepository;
 import org.example.repository.VenteRepository;
@@ -91,8 +92,8 @@ public class IHMVente {
         Client clientFound =  clientRepository.findById(idClient);
 
 
-        ElectroniqueRepository electroniqueRepository = new ElectroniqueRepository();
-        ArticleElectronique articleFound;
+        ArticleRepository articleRepository = new ArticleRepository();
+        Article articleFound;
         List<Article> list = new ArrayList<>();
         while (true) {
             System.out.println("Saisir l'id de l'article (0 pour quitter)");
@@ -101,7 +102,7 @@ public class IHMVente {
             if (idArticle == 0) {
                 break;
             }
-            articleFound = electroniqueRepository.findById(idArticle);
+            articleFound = articleRepository.findById(idArticle);
             if (articleFound != null) {
                 list.add(articleFound);
                 System.out.println("Article ajouté : " + articleFound);

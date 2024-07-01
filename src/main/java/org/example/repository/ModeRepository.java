@@ -14,14 +14,16 @@ public class ModeRepository {
         sessionFactory = SessionfactorySingleton.getSessionFactory();
     }
 
-    public ArticleMode createElectronique(ArticleMode articleMode) {
+    public ArticleMode createMode(ArticleMode articleMode) {
         try{
             session = sessionFactory.openSession();
             session.beginTransaction();
             session.save(articleMode);
             session.getTransaction().commit();
+            System.out.println("ça marche");
             return articleMode;
         }catch (Exception ex){
+            System.out.println("ça marche pas");
             session.getTransaction().rollback();
             return null;
         }finally {
