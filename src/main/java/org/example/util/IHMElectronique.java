@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -15,6 +14,8 @@ public class IHMElectronique {
     private static SessionFactory sessionFactory;
     private static Session session;
     private Scanner sc;
+    private ElectroniqueRepository electroniqueRepository = new ElectroniqueRepository();
+
 
     public IHMElectronique() {
         sc = new Scanner(System.in);
@@ -27,16 +28,17 @@ public class IHMElectronique {
 
         while (true) {
             System.out.println("=== Articles électroniques ===");
-            System.out.println("1. Création");
-            System.out.println("2. Modification");
-            System.out.println("3. Suppression");
-            System.out.println("4. Consultation");
-            System.out.println();
-            System.out.print("Sélectionnez une option : ");
+
+            DisplayCRUD displayCRUD = new DisplayCRUD();
+            displayCRUD.appelAffichage();
+
             choix = sc.nextLine();
 
             switch (choix) {
                 case "1" -> create();
+                case "2" -> update();
+                case "3" -> delete();
+                case "4" -> findAll();
                 default -> {
                     return;
                 }
@@ -83,11 +85,69 @@ public class IHMElectronique {
                 .dureeBatterie(batterie)
                 .build();
 
-        ElectroniqueRepository electroniqueRepository = new ElectroniqueRepository();
         electroniqueRepository.createElectronique(article);
         System.out.println(article);
         return article;
 
+    }
 
+    public void update() {
+        System.out.println("=== Modification ===");
+        System.out.println("id du produit : ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        ArticleElectronique articleElectronique = electroniqueRepository.findById(id);
+
+        System.out.println("Description");
+        System.out.println("ancienne description : " + articleElectronique.getDescription());
+        String description = sc.nextLine();
+        articleElectronique.setDescription(description);
+
+        System.out.println("Prix");
+        System.out.println("ancien prix : " + articleElectronique.getPrix());
+        double prix = sc.nextDouble();
+        articleElectronique.setPrix(prix);
+
+        System.out.println("Quantité");
+        System.out.println("ancienne quantité : " + articleElectronique.getQuantite());
+        int quantite = sc.nextInt();
+        sc.nextLine();
+        articleElectronique.setQuantite(quantite);
+
+        System.out.println("Durée de la batterie");
+        System.out.println("ancienne durée : " + articleElectronique.getDureeBatterie());
+        int batterie = sc.nextInt();
+        sc.nextLine();
+        articleElectronique.setDureeBatterie(batterie);
+
+        System.out.println("date de restock (dd/MM/yyyy)");
+        System.out.println("ancienne date : " + articleElectronique.getDateRestock());
+        String dateString = sc.nextLine();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date;
+        try {
+            date = formatter.parse(dateString);
+            System.out.println("Converted Date: " + date);
+            articleElectronique.setDateRestock(date);
+        } catch (ParseException e) {
+            System.out.println("Invalid date format. Please enter the date in the format MM/dd/yyyy.");
+            throw new RuntimeException(e);
+        }
+
+        electroniqueRepository.updateElectronique(articleElectronique);
+    }
+
+    public void delete() {
+        System.out.println("Quelle id voulez-vous supprimer ? ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        ArticleElectronique articleElectronique = electroniqueRepository.findById(id);
+        electroniqueRepository.delete(articleElectronique);
+    }
+
+    public void findAll() {
+        ElectroniqueRepository electroniqueRepository = new ElectroniqueRepository();
+        electroniqueRepository.findAll();
     }
 }

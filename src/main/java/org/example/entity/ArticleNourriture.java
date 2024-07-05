@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @SuperBuilder
@@ -15,5 +16,10 @@ import java.time.LocalDate;
 @Data
 public class ArticleNourriture extends Article {
     @Column(name="date_peremption")
-    private LocalDate datePeremption;
+    private Date datePeremption;
+
+    @Override
+    public String toString() {
+        return super.toString()+"ArticleNourriture [datePeremption=" + datePeremption + "]";
+    }
 }

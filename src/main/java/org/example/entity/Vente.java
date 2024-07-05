@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -17,7 +18,7 @@ import java.util.List;
 @Builder
 public class Vente {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name="date_vente")
@@ -50,6 +51,11 @@ public class Vente {
                 ", etat=" + etat +
                 ", client=" + (client != null ? client.getId() : null) +
                 ", articlesCount=" + (articles != null ? articles.size() : 0) +
+                ", articleIds=" + (articles != null ? articles
+                .stream()
+                .map(Article::getId)
+                .collect(Collectors.toList())
+                : "[]") +
                 '}';
     }
 }

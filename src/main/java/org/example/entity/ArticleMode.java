@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.example.util.Categorie;
+import org.example.util.Taille;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -17,5 +18,11 @@ public class ArticleMode extends Article{
     @Enumerated
     private Categorie categorie;
 
-    private int taille;
+    @Enumerated
+    private Taille taille;
+
+    @Override
+    public String toString() {
+        return super.toString()+" "+categorie+" "+taille;
+    }
 }

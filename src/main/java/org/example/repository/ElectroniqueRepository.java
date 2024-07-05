@@ -5,6 +5,9 @@ import org.example.util.SessionfactorySingleton;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.Query;
+import java.util.List;
+
 public class ElectroniqueRepository {
     private SessionFactory sessionFactory;
     private Session session;
@@ -48,5 +51,39 @@ public class ElectroniqueRepository {
         ArticleElectronique client = session.get(ArticleElectronique.class,id);
         session.close();
         return client;
+    }
+
+    public void updateElectronique(ArticleElectronique articleElectronique){
+        try{
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(articleElectronique);
+            session.getTransaction().commit();
+        }catch (Exception ex){
+            session.getTransaction().rollback();
+        }finally {
+            session.close();
+        }
+    }
+
+    public List<ArticleElectronique> findAll (){
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+
+            String hql = "SELECT a FROM ArticleElectronique a ";
+            Query query = session.createQuery(hql, ArticleElectronique.class);
+            List<ArticleElectronique> articleElectroniques = query.getResultList();
+
+            for (ArticleElectronique articleElectronique : articleElectroniques) {
+                System.out.println(articleElectronique);
+            }
+
+            return articleElectroniques;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

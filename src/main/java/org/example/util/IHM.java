@@ -38,7 +38,6 @@ public class IHM {
                     return;
                 }
             }
-
         }
     }
 
@@ -55,6 +54,7 @@ public class IHM {
 
             switch (choixTypeArticle) {
                 case "1" -> IHMElectronique();
+                case "2" -> IHMNourriture();
                 case "3" -> IHMMode();
                 default -> {
                     return;
@@ -66,6 +66,11 @@ public class IHM {
     private void IHMElectronique() {
     IHMElectronique iHMElectronique = new IHMElectronique();
     iHMElectronique.start();
+    }
+
+    private void IHMNourriture() {
+        IHMNourriture ihmNourriture = new IHMNourriture();
+        ihmNourriture.start();
     }
 
     private void IHMMode() {
@@ -87,6 +92,5 @@ public class IHM {
         IHMRapports ihmRapports = new IHMRapports();
         ihmRapports.start();
     }
-
 
 }
