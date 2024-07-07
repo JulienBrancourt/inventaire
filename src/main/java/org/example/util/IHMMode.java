@@ -206,8 +206,6 @@ public class IHMMode {
     }
 
     public void delete() {
-//        ModeRepository modeRepository = new ModeRepository();
-
         System.out.println("Quelle id voulez-vous supprimer ? ");
         int id = sc.nextInt();
         sc.nextLine();

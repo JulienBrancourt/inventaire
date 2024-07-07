@@ -27,7 +27,7 @@ public class Vente {
     @Enumerated
     private Etat etat;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "vente_article",
             joinColumns = @JoinColumn(name = "vente_id"),
@@ -35,7 +35,7 @@ public class Vente {
     )
     private List<Article> articles;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
 

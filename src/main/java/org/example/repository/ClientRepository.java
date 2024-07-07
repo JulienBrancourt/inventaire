@@ -5,6 +5,9 @@ import org.example.util.SessionfactorySingleton;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import javax.persistence.Query;
+import java.util.List;
+
 public class ClientRepository {
     private SessionFactory sessionFactory;
     private Session session;
@@ -48,5 +51,39 @@ public class ClientRepository {
         Client client = session.get(Client.class,id);
         session.close();
         return client;
+    }
+
+    public void updateClient(Client client){
+        try{
+            session = sessionFactory.openSession();
+            session.beginTransaction();
+            session.update(client);
+            session.getTransaction().commit();
+        }catch (Exception ex){
+            session.getTransaction().rollback();
+        }finally {
+            session.close();
+        }
+    }
+
+    public List<Client> findAll (){
+        Session session = null;
+        try {
+            session = sessionFactory.openSession();
+
+            String hql = "SELECT c FROM Client c ";
+            Query query = session.createQuery(hql, Client.class);
+            List<Client> clients = query.getResultList();
+
+            for (Client client : clients) {
+                System.out.println(client);
+            }
+
+            return clients;
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 }

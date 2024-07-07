@@ -5,12 +5,14 @@ import org.example.repository.ClientRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+
 import java.util.Scanner;
 
 public class IHMClient {
     private static SessionFactory sessionFactory;
     private static Session session;
     private Scanner sc;
+    private ClientRepository clientRepository = new ClientRepository();
 
     public IHMClient() {
         sc = new Scanner(System.in);
@@ -33,6 +35,9 @@ public class IHMClient {
 
             switch (choix) {
                 case "1" -> create();
+                case "2" -> update();
+                case "3" -> delete();
+                case "4" -> findAll();
                 default -> {
                     return;
                 }
@@ -55,12 +60,44 @@ public class IHMClient {
                 .email(email)
                 .build();
 
-        ClientRepository clientRepository = new ClientRepository();
         clientRepository.createClient(client);
-
         System.out.println(client);
         return client;
 
+    }
+
+    public void update() {
+        System.out.println("=== Modification ===");
+        System.out.println("id du client : ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        Client client = clientRepository.findById(id);
+
+        System.out.println("Nom");
+        System.out.println("ancien nom : " + client.getNom());
+        String nom = sc.nextLine();
+        client.setNom(nom);
+
+        System.out.println("Mail");
+        System.out.println("ancien mail : " + client.getEmail());
+        String mail = sc.nextLine();
+        client.setEmail(mail);
+
+        clientRepository.updateClient(client);
+    }
+
+    public void delete() {
+        System.out.println("Quelle id voulez-vous supprimer ? ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        Client client = clientRepository.findById(id);
+        clientRepository.delete(client);
+    }
+
+    public void findAll() {
+        ClientRepository clientRepository = new ClientRepository();
+        clientRepository.findAll();
     }
 
 }
