@@ -24,7 +24,7 @@ public abstract class Article {
     @Column(name = "date_restock")
     protected Date dateRestock;
 
-    @ManyToMany(mappedBy = "articles")
+    @ManyToMany(mappedBy = "articles", cascade = CascadeType.ALL)
     private List<Vente> ventes;
 
     @Override
